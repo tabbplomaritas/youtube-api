@@ -1,0 +1,43 @@
+Code Project:
+
+
+
+Create a single page with a layout of your choosing. The page should be fluidly responsive. The page should contain the following elements:
+
+
+
+Navigation
+
+Search
+
+YouTube video player
+
+Title
+
+Description
+
+Youtube Video Thumbnail
+
+Number of Views
+
+Number of Likes
+
+Number of Dislikes
+
+
+
+1. Gather five or more movie trailers from YouTube. Each navigation item should change the video, title and description.  The video player should reflect the video, title, description, thumbnail, views, likes, and dislikes.
+
+
+2.  Include a Search field that queries the YouTube API for results.  Display up to 5 results from your search including the aforementioned statistics.
+
+
+Technical Requirements:
+
+
+You can use any css library or framework of your choice.
+
+You can use any javascript library or framework of your choice.
+
+
+Use the YouTube JavaScript API to load videos on demand. Please consider modern UI/UX principles when displaying your results and navigation.  As we would prefer to run this locally, please provide your solution in HTML, JS and CSS of course. Please be mindful of the final size of your project, delivering only what is necessary.  Please submit your files via zip or host them on a public Git server of your choice (GitHub, GitLab etc).
