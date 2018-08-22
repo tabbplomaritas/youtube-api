@@ -21,7 +21,7 @@ function YouTubeService($http) {
       console.log(response);
       data = response.data.items;
       console.log(data);
-      
+
         return data;
     }, (error) => {
       console.log(error);
@@ -30,20 +30,31 @@ function YouTubeService($http) {
 
   const getTrailers = () => {
     console.log(trailers);
-  
+
     return $http({
       method: 'GET',
-      url: `https://www.googleapis.com/youtube/v3/videos?id=${trailers}&key=AIzaSyB76Pizg-mT_itkTTAJXwJTs6_tL3KTMJk&part=statistics,snippet,player
-    
+      url: `https://www.googleapis.com/youtube/v3/videos?id=${trailers}&key=${key()}&part=statistics,snippet,player
+
       `,
     }).then((response) => {
-      console.log(response);
       trailerStats = response;
+      console.log(trailerStats.data.items[0]);
+
+
+      console.log(trailerStats);
+
       return response;
     }, (error) => {
       console.log(error);
     });
   }
+
+  const addCustomTitle = () => {
+    // trailerStats.data.items[0].customTitle = "Smallfoot";
+    console.log(trailerStats);
+  }
+
+
 
   const getStats = () => {
       return stats;
@@ -53,7 +64,8 @@ function YouTubeService($http) {
   return {
     getYouTube,
     getStats,
-    getTrailers
+    getTrailers,
+    addCustomTitle
   }
 }
 

@@ -9,33 +9,81 @@ html {
 }
 
 body {
+  margin: 1rem;
   width: 100%;
   font-size: 1.3rem;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+h1,h2,h3,h4,h5,h5,h6 {
+  font-family: 'Alegreya Sans', sans-serif;
+}
+
+h1 {
+  font-size: 3.5rem;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #f3a683;
 }
 
 nav {
   display: flex;
-  flex-direction: row;
-  margin-top: 3rem;
-  border: 3px solid grey;
+  flex-direction: column;
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu {
+  color: #778beb;
+  font-size:1.7rem;
+  border: 1px solid #778beb;
+  padding: 1rem;
+  border-radius: 5px;
 
 }
 
+.movieInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
 a {
-  background-color: crimson;
-  color: white;
-  font-family: monospace;
-  font-size: 2.2rem;
+  background-color:#f7d794;
+  color: #778beb;
+  font-size: 1.7rem;
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   transition: .25s all;
-  text-transform: capitalize;
+  text-transform: uppercase;
   margin: 1rem;
   width: 30rem;
+  text-align: center;
 }
 
 a:hover {
   box-shadow: 2px 2px 2px 2px grey;
-  
 }
+
+.description {
+  width: 50%;
+}
+
+.movieInfo p {
+  font-weight: 300;
+}
+
+#e77f67
+#cf6a87
+#778beb
+#f7d794
+#f3a683
