@@ -23,6 +23,10 @@ h1,h2,h3,h4,h5,h5,h6 {
   font-family: 'Alegreya Sans', sans-serif;
 }
 
+button {
+  cursor: pointer;
+}
+
 h1 {
   font-size: 3.5rem;
   width: 100%;
@@ -39,7 +43,7 @@ nav {
   align-items: center;
 }
 
-.menu {
+#menu {
   color: #778beb;
   font-size:1.7rem;
   border: 1px solid #778beb;
@@ -80,6 +84,25 @@ a:hover {
 
 .movieInfo p {
   font-weight: 300;
+}
+
+.readMore {
+  padding: 1px;
+  border-radius: 5px;
+  border: 1px solid #f3a683;
+}
+
+
+/* media queries  */
+@media screen and (min-width: 500px) {
+  nav {
+    flex-direction: row;
+  }
+
+  #menu {
+    display: none;
+  }
+
 }
 
 #e77f67
