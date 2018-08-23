@@ -1,0 +1,71 @@
+<nav>
+
+  <!-- main nav links -->
+  <div class="nav_linkContainer">
+    <a ng-click="showTrailers = !showTrailers">Movie Trailers</a>
+    <a ng-click="showSearch=!showSearch">Search</a>
+    <a>About</a>
+  </div>
+  <hr>
+</nav>
+
+  <!-- nav dropdown items -->
+<section class="dropdowns">
+    <!-- trailer dropdown -->
+    <div class="dropdowns_linksWrapper">
+      <div class="dropdowns_trailerLinks" ng-class= "{ 'animated slideInDown' : showTrailers, 'animated slideOutUp' : !showTrailers }">
+        <a ng-repeat="trailer in $ctrl.trailers" id={{trailer.id}} ng-click="$ctrl.clickMovie($event, $index)">{{trailer.customTitle}}</a>
+      </div>
+    </div>
+
+    <!--Search drop down form-->
+    <form ng-class= "{ 'animated fadeIn' : showSearch, 'animated fadeOut' : !showSearch }" ng-submit="$ctrl.sendRequest($ctrl.query);">
+      <div class="searchWrapper">
+        <input type="text" ng-model="$ctrl.query" placeholder="Search for a movie trailer">
+        <button class="searchButton">
+            <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </form>
+ 
+
+    <!-- about -->
+      <div>
+      </div>
+
+   
+</section>  
+ 
+
+
+
+  <section class="movieInfo">
+    <h2>{{$ctrl.clickedMovie.snippet.title}}</h2>
+
+    <img ng-show="$ctrl.showThumb" src={{$ctrl.clickedMovie.snippet.thumbnails.medium.url}}>
+    <button class="watchTrailer" ng-click="$ctrl.watchTrailer()">Watch the trailer</button>
+    <p class="description" >{{$ctrl.clickedMovie.snippet.description | limitTo: $ctrl.limit }} ...
+    <button class="readMore" ng-click="$ctrl.readMore();"> read more</button></p>
+
+    <div class="movieInfo_stats">
+      <p>Views: {{$ctrl.clickedMovie.statistics.viewCount}}</p>
+      <p>Likes: {{$ctrl.clickedMovie.statistics.likeCount}} </p>
+      <p>Dislikes: {{$ctrl.clickedMovie.statistics.dislikeCount}}</p>
+    </div>
+
+  </section>
+
+  <section class="videoPlayer">
+    <h2>{{$ctrl.clickedMovie.snippet.title}}</h2>
+    <iframe ng-show="$ctrl.showPlayer" width="336" height="189"src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </section>
+
+  <section class="searchResults">
+    <div ng-repeat="item in $ctrl.queryResults">
+      <p>{{item.snippet.title}}</p>
+      <p>{{item.snippet.description | limitTo:600 }} ...<button class="readMore"> read more</button></p>
+      <p>{{item.statistics.viewCount}} Views</p>
+
+      <img src="{{item.snippet.thumbnails.medium.url}}">
+    </div>
+  </section>
