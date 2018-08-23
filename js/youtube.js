@@ -30,7 +30,7 @@ const youTube = {
 
   <section class="movieInfo">
     <h2>{{$ctrl.clickedMovie.snippet.title}}</h2>
-    <p class="description" >{{$ctrl.clickedMovie.snippet.description | limitTo:500 }} ...<button class="readMore">read more</button></p>
+    <p class="description" >{{$ctrl.clickedMovie.snippet.description | limitTo:600 }} ...<button class="readMore">read more</button></p>
 
     <img ng-show="$ctrl.showThumb" src={{$ctrl.clickedMovie.snippet.thumbnails.medium.url}}
 
@@ -38,7 +38,7 @@ const youTube = {
     <p>{{$ctrl.clickedMovie.statistics.likeCount}} Likes</p>
     <p>{{$ctrl.clickedMovie.statistics.dislikeCount}}Dislikes</p>
 
-    <button ng-click="$ctrl.watchTrailer()">Watch the trailer</button>
+    <a class="watchTrailer" ng-click="$ctrl.watchTrailer()">Watch the trailer</a>
 
     <iframe width="560" height="315" ng-show="$ctrl.showPlayer" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </section>
@@ -46,7 +46,7 @@ const youTube = {
   <section class="searchResults">
     <div ng-repeat="item in $ctrl.queryResults">
       <p>{{item.snippet.title}}</p>
-      <p>{{item.snippet.description | limitTo:500 }} ...<button class="readMore"> read more</button></p>
+      <p>{{item.snippet.description | limitTo:600 }} ...<button class="readMore"> read more</button></p>
       <p>{{item.statistics.viewCount}} Views</p>
 
       <img src="{{item.snippet.thumbnails.medium.url}}">

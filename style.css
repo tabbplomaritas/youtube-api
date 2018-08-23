@@ -92,6 +92,11 @@ a:hover {
   border: 1px solid #f3a683;
 }
 
+.watchTrailer {
+  color: #f7d794;
+  background-color: #cf6a87;
+}
+
 
 /* media queries  */
 @media screen and (min-width: 500px) {
