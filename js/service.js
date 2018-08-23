@@ -1,8 +1,3 @@
-// https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=YOUR_API_KEY
-// &part=snippet,contentDetails,statistics,status
-
-// https://www.googleapis.com/youtube/v3/videos?id=5owigsJJCsc,LCySGDkXFpI,paREY4LLwEY,zC9b1orltc8&key=AIzaSyB76Pizg-mT_itkTTAJXwJTs6_tL3KTMJk&part=statistics,snippet,player
-
 "use strict";
 
 function YouTubeService($http) {
@@ -66,8 +61,6 @@ function YouTubeService($http) {
       console.log(error);
     });
   }
-
-
 
 
 

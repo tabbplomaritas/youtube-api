@@ -1,7 +1,8 @@
 * {
   margin: 0;
 	padding: 0;
-	border: 0;
+  border: 0;
+  box-sizing: border-box;
 }
 
 html {
@@ -10,13 +11,14 @@ html {
 
 body {
   margin: 1rem;
-  width: 100%;
+  height: 100vh;
   font-size: 1.3rem;
   font-family: 'Montserrat', sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
 }
 
 h1,h2,h3,h4,h5,h5,h6 {
@@ -28,11 +30,17 @@ button {
 }
 
 h1 {
-  font-size: 3.5rem;
+  margin-top: 2rem;
+  font-size: 4.5rem;
   width: 100%;
   text-align: center;
   text-transform: uppercase;
-  color: #f3a683;
+  color: white;
+
+  background: -webkit-linear-gradient(to bottom right, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom right, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 nav {
@@ -40,18 +48,130 @@ nav {
   flex-direction: column;
   margin-top: 1rem;
   justify-content: center;
+  align-items: center;;
+}
+
+nav div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
+  width: 100%
+}
+
+.navLink {
+  border: 1px solid white;
+  margin:.5rem;
+  padding: 1rem;
+  border-radius: 5px;
+  color: white;
+  background-color: #2d3436;
+  transition: .25s all;
+  text-transform: uppercase;
+  width: 25rem;
+  text-align: center;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.navLink:hover, .navLink:active {
+  background-color: white;
+  color: #2d3436;
+  border: 1px solid #2d3436;
 }
 
 #menu {
-  color: #778beb;
+  color: #c471ed;
   font-size:1.7rem;
-  border: 1px solid #778beb;
+  border: 1px solid #c471ed;
   padding: 1rem;
   border-radius: 5px;
-
 }
 
+hr {
+  color: #2d3436;
+  width: 30rem;
+  border-bottom: 1px solid #2d3436;
+  margin: 1rem 0;
+}
+
+
+
+.trailerLinks {
+  width: 25rem;
+  border-radius: 5px;
+  transition: .25s all;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation-fill-mode: forwards;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: #12c2e9;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.linksWrapper {
+  overflow: hidden;
+  height: auto;
+}
+
+.trailerLinks a {
+  color: white;
+  font-size: 1.7rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: .25s all;
+  text-transform: uppercase;
+  width: 25rem;
+  text-align: center;
+  border-bottom: 1px solid white;
+}
+
+a:hover {
+background-color:#2d3436;
+}
+
+form {
+  position: absolute;
+  top: 45%;
+}
+
+.searchWrapper {
+  padding: 1rem;
+  width: 33rem;
+  background-color: white;
+  border: 1px solid #2d3436;
+  border-radius: 5px;
+  font-size: 1.7rem;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.searchWrapper button {
+  font-size: 1.7rem;
+  color: white;
+  background-color: #f64f59;
+  height: 100%;
+  padding: .5rem;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline:none;
+}
+
+input[type=text] {
+  width: 100%;
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+/* movie trailer info styles */
 .movieInfo {
   display: flex;
   flex-direction: column;
@@ -60,22 +180,13 @@ nav {
   opacity: 0;
 }
 
-a {
-  background-color:#f7d794;
-  color: #778beb;
-  font-size: 1.7rem;
-  padding: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: .25s all;
-  text-transform: uppercase;
-  margin: 1rem;
-  width: 30rem;
-  text-align: center;
+.movieInfo h2 {
+  color: #f64f59;
+  font-size: 3.2rem;
 }
 
-a:hover {
-  box-shadow: 2px 2px 2px 2px grey;
+.movieInfo_stats{
+
 }
 
 .description {
@@ -101,17 +212,19 @@ a:hover {
 /* media queries  */
 @media screen and (min-width: 500px) {
   nav {
+    /* flex-direction: row; */
+  }
+
+  nav div {
     flex-direction: row;
   }
 
   #menu {
-    display: none;
+    /* display: none; */
   }
 
 }
 
-#e77f67
-#cf6a87
-#778beb
-#f7d794
-#f3a683
+#f64f59
+#c471ed
+#12c2e9
