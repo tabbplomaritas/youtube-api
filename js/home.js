@@ -28,7 +28,7 @@ const home = {
           </button>
         </div>
       </form>
-  </section>  
+  </section>
 
 
   <section class="player">
@@ -63,7 +63,7 @@ const home = {
       <p>{{item.snippet.title}}</p>
 
       <img src="{{item.snippet.thumbnails.medium.url}}" id={{item.id}} ng-click="$ctrl.setClickedMovie($event);" alt='thumbnail image of youtube movie titled {{item.snippet.title}}'>
-      
+
   </section>`,
 
   controller: ["YouTubeService", "$timeout", function(YouTubeService, $timeout) {
@@ -72,7 +72,7 @@ const home = {
     vm.trailers;
     vm.clickedMovie;
     vm.queryResults;
-    
+
     let videoId;
     let trailerLinks = document.querySelector(".dropdowns_trailerLinks");
     let linksWrapper = document.querySelector(".dropdowns_linksWrapper");
@@ -80,7 +80,7 @@ const home = {
     let formWrapper = document.querySelector(".form_wrapper");
     let searchResults = document.querySelector(".searchResults");
     let trailerLinksVisible = false;
-    let formVisible = false; 
+    let formVisible = false;
     let movieInfoThumbnail = document.querySelector("movieInfo_thumbnail");
     let readButton = document.querySelector(".readMore");
     let iframe = document.querySelector("iframe");
@@ -89,8 +89,8 @@ const home = {
     vm.showPlayer = false;
     vm.showThumb = true;
     vm.limit = 100;
- 
-    
+
+
 
     YouTubeService.getTrailers().then((response) => {
       vm.trailers = response.data.items;
@@ -111,7 +111,7 @@ const home = {
     }
 
     vm.showSearchForm = () => {
-      
+
       vm.slideUp();
       angular.element(form).removeClass("fadeOut");
 
@@ -159,7 +159,7 @@ const home = {
       $timeout(function() {
         angular.element(trailerLinks).removeClass("slideInDown");
       }, 1400);
-      
+
       trailerLinksVisible = true;
     }
 
@@ -172,24 +172,26 @@ const home = {
         angular.element(linksWrapper).css("display", "none");
         angular.element(trailerLinks).removeClass("slideOutUp");
       }, 800);
-     
+
       trailerLinksVisible = false;
     }
-    
+
     vm.setClickedMovie = ($event) => {
       //slide the trailerLinks menu up
       vm.slideUp();
-
-      //reset the read more button incase it was previously hidden and reset description limit
-      angular.element(readButton).css("display", "block");
-      vm.limit = 100;
 
       //set the clickedMovie data
       YouTubeService.setClickedMovie($event.target.id).then((response) => {
         vm.clickedMovie = response;
         iframe.src = `https://www.youtube.com/embed/${vm.clickedMovie.id}`;
+            //reset the read more button incase it was previously hidden and reset description limit
+
+        if(vm.clickedMovie.snippet.description.length > 100){
+          angular.element(readButton).css("display", "block");
+          vm.limit = 100;
+        }
       });
-       
+
       //animate in the player
       $timeout( function(){
       //set iframe source
@@ -198,7 +200,7 @@ const home = {
       }, 600 );
       window.scrollTo(0, 0);
     };
-    
+
 
     vm.fadeOut = () => {
       //fade out movie info thumbnail
@@ -222,7 +224,7 @@ const home = {
       //increase the character limit on description
         vm.limit = 100000;
       //remove 'read more' button
-        angular.element(readButton).css("display", "none"); 
+        angular.element(readButton).css("display", "none");
     }
 
     vm.watchTrailer = () => {
@@ -234,11 +236,11 @@ const home = {
           vm.showThumb = false;
       }, 500 );
     }
-    
+
     vm.sendRequest = (query) => {
       //if visible, fadeout the movie info section to make room for the search results
       vm.movieInfo_fadeOut();
-      
+
       //send api call for user input search term then set response to variable.
       YouTubeService.sendQuery(query).then((response) => {
         vm.queryResults = response;
