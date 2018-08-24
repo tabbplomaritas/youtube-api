@@ -1,7 +1,70 @@
 "use strict";
 
 const home = {
-  templateUrl: "../home.html",
+  template: `
+  <nav class="flex-col-center">
+      <a id="trailers" ng-click="$ctrl.animateDropdown();">Movie Trailers</a>
+      <a id="search" ng-click="$ctrl.animateSearchForm();">Search</a>
+  </nav>
+
+  <hr>
+
+  <section class="dropdowns flex-col-center">
+      <!-- trailer links dropdown -->
+      <!-- using wrapper div to hide the overflow on aninmated links div -->
+      <div class="dropdowns_linksWrapper">
+        <div class="dropdowns_trailerLinks shadow animated">
+          <a ng-repeat="trailer in $ctrl.trailers" id={{trailer.id}} ng-click="$ctrl.setClickedMovie($event)">{{trailer.customTitle}}</a>
+          <i class="fas fa-times-circle trailerLinks_close" ng-click="$ctrl.slideUp();"></i>
+        </div>
+      </div>
+
+    <!--Search drop down form-->
+      <form class="animated" ng-submit="$ctrl.sendRequest($ctrl.query);">
+        <div class="searchWrapper shadow">
+          <input type="text" ng-model="$ctrl.query" placeholder="Search for a movie trailer" autofocus >
+          <button class="searchButton">
+              <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+  </section>  
+
+
+  <section class="player">
+      <i class="fas fa-times-circle movieInfo_close" ng-click="$ctrl.movieInfo_fadeOut();"></i>
+      <h2>{{$ctrl.clickedMovie.snippet.title}}</h2>
+
+    <div class="movieInfo_thumbnail" ng-show="$ctrl.showThumb">
+      <img src={{$ctrl.clickedMovie.snippet.thumbnails.medium.url}} alt='thumbnail image of youtube movie titled {{$ctrl.clickedMovie.snippet.title}}'>
+      <button class="watchTrailer animated pulse infinite" ng-click="$ctrl.watchTrailer()">Watch the trailer</button>
+    </div>
+
+    <section class="videoPlayer">
+        <iframe ng-show="$ctrl.showPlayer" width="336" height="189" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </section>
+
+      <section class="movieInfo_details">
+        <p class="description" >{{$ctrl.clickedMovie.snippet.description | limitTo: $ctrl.limit }} ...
+        <button class="readMore" ng-click="$ctrl.readMore();"> read more</button></p>
+
+        <div class="movieInfo_stats">
+          <p>Views: <i class="fas fa-eye"></i> {{$ctrl.clickedMovie.statistics.viewCount}}</p>
+          <p>Likes: <i class="fas fa-heart"></i> {{$ctrl.clickedMovie.statistics.likeCount}} </p>
+          <p>Dislikes: <i class="fas fa-thumbs-down"></i> {{$ctrl.clickedMovie.statistics.dislikeCount}}</p>
+        </div>
+      </section>
+  </section>
+
+<!-- search results list -->
+
+  <section class="searchResults">
+    <div class="searchResults_thumbnail animated fadeIn shadow" ng-repeat="item in $ctrl.queryResults">
+      <p>{{item.snippet.title}}</p>
+
+      <img src="{{item.snippet.thumbnails.medium.url}}" id={{item.id}} ng-click="$ctrl.setClickedMovie($event);" alt='thumbnail image of youtube movie titled {{item.snippet.title}}'>
+      
+  </section>`,
 
   controller: ["YouTubeService", "$timeout", function(YouTubeService, $timeout) {
 
@@ -9,22 +72,25 @@ const home = {
     vm.trailers;
     vm.clickedMovie;
     vm.queryResults;
-    vm.showPlayer = false;
-    vm.showThumb = true;
-    vm.limit = 100;
+    
     let videoId;
-    let movieInfoThumbnail = document.querySelector("movieInfo_thumbnail");
-    let readButton = document.querySelector(".readMore");
-    let movieInfo = document.querySelector(".movieInfo");
-    let iframe = document.querySelector("iframe");
-    let dropdowns = document.querySelector(".dropdowns");
     let trailerLinks = document.querySelector(".dropdowns_trailerLinks");
     let linksWrapper = document.querySelector(".dropdowns_linksWrapper");
     let form = document.querySelector("form");
     let formWrapper = document.querySelector(".form_wrapper");
     let searchResults = document.querySelector(".searchResults");
     let trailerLinksVisible = false;
-    let formVisible = false;
+    let formVisible = false; 
+    let movieInfoThumbnail = document.querySelector("movieInfo_thumbnail");
+    let readButton = document.querySelector(".readMore");
+    let iframe = document.querySelector("iframe");
+    let player = document.querySelector(".player");
+
+    vm.showPlayer = false;
+    vm.showThumb = true;
+    vm.limit = 100;
+ 
+    
 
     YouTubeService.getTrailers().then((response) => {
       vm.trailers = response.data.items;
@@ -77,8 +143,9 @@ const home = {
     }
 
     vm.slideDown = () => {
-      //if movieInfo section is showing, blur
-      angular.element(movieInfo).addClass("blur");
+      //if movieInfo or search results section is showing, blur
+      angular.element(player).addClass("blur");
+      angular.element(searchResults).addClass("blur");
       //hide search form
       if(formVisible){
         vm.hideForm();
@@ -98,7 +165,8 @@ const home = {
 
     vm.slideUp = () => {
       angular.element(trailerLinks).addClass("slideOutUp");
-      angular.element(movieInfo).removeClass("blur");
+      angular.element(player).removeClass("blur");
+      angular.element(searchResults).removeClass("blur");
 
       $timeout(function() {
         angular.element(linksWrapper).css("display", "none");
@@ -107,46 +175,48 @@ const home = {
      
       trailerLinksVisible = false;
     }
-
-    vm.clickMovie = ($event, $index) => {
+    
+    vm.setClickedMovie = ($event) => {
       //slide the trailerLinks menu up
       vm.slideUp();
-      //clear the search results if they're showing
-      angular.element(searchResults).addClass("animated fadeOut");
+
       //reset the read more button incase it was previously hidden and reset description limit
       angular.element(readButton).css("display", "block");
       vm.limit = 100;
-      //set or update the clicked movie data and fade in
-      $timeout( function(){
-        angular.element(movieInfo).css("display", "flex");
-        videoId = $event.target.id;
-        iframe.src = `https://www.youtube.com/embed/${videoId}`;
-        vm.clickedMovie = vm.trailers[$index];
-        angular.element(movieInfo).addClass("animated fadeIn");
-      }, 600 );
 
-      //reset the thumbnail to show and the video to not show
-      vm.showPlayer = false;
-      vm.showThumb = true;
-    }
+      //set the clickedMovie data
+      YouTubeService.setClickedMovie($event.target.id).then((response) => {
+        vm.clickedMovie = response;
+        iframe.src = `https://www.youtube.com/embed/${vm.clickedMovie.id}`;
+      });
+       
+      //animate in the player
+      $timeout( function(){
+      //set iframe source
+        angular.element(player).css("display", "flex");
+        angular.element(player).addClass("animated fadeIn");
+      }, 600 );
+      window.scrollTo(0, 0);
+    };
+    
 
     vm.fadeOut = () => {
       //fade out movie info thumbnail
       angular.element(movieInfoThumbnail).addClass("animated fadeOut");
       //remove fadeOut
-      $timeout( function(){
-        angular.element(movieInfoThumbnail).css("display", "none");
-        angular.element(movieInfoThumbnail).removeClass("animated fadeOut");
-    }, 500 );
+        $timeout( function(){
+          angular.element(movieInfoThumbnail).css("display", "none");
+          angular.element(movieInfoThumbnail).removeClass("animated fadeOut");
+      }, 500 );
     }
 
     vm.movieInfo_fadeOut = () => {
-      angular.element(movieInfo).addClass("fadeOut");
+      angular.element(player).addClass("fadeOut");
       $timeout(function() {
-        angular.element(movieInfo).css("display", "none");
-        angular.element(movieInfo).removeClass("fadeOut");
+        angular.element(player).css("display", "none");
+        angular.element(player).removeClass("fadeOut");
       }, 1000)
-  }
+    }
 
     vm.readMore = () => {
       //increase the character limit on description
@@ -164,18 +234,18 @@ const home = {
           vm.showThumb = false;
       }, 500 );
     }
-
     
     vm.sendRequest = (query) => {
       //if visible, fadeout the movie info section to make room for the search results
-     vm.movieInfo_fadeOut();
-
+      vm.movieInfo_fadeOut();
+      
       //send api call for user input search term then set response to variable.
       YouTubeService.sendQuery(query).then((response) => {
         vm.queryResults = response;
+        //reset search input
+        vm.query = "";
       });
     }
-
   }]
 };
 

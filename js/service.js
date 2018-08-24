@@ -4,9 +4,10 @@ function YouTubeService($http) {
 
   let trailerStats;
   let queryResults;
-  let trailers = "5owigsJJCsc,LCySGDkXFpI,paREY4LLwEY,zC9b1orltc8,0B5v45HutgQ";
+  let trailers = "5owigsJJCsc,UU8-4ccWKzY,paREY4LLwEY,zC9b1orltc8,0B5v45HutgQ";
   let queryIds = "";
   let queryDetails;
+  let clickedMovie;
 
   const sendQuery = (query)=> {
     return $http({
@@ -35,11 +36,9 @@ function YouTubeService($http) {
     //request the stats and snippet for each
     return $http({
       method: 'GET',
-      url: `https://www.googleapis.com/youtube/v3/videos?id=${queryIds}&key=${key()}&part=statistics,snippet,player`,
+      url: `https://www.googleapis.com/youtube/v3/videos?id=${queryIds}&key=${key()}&part=statistics,snippet`,
     }).then((response) => {
-      console.log(response);
       queryDetails = response.data.items;
-      console.log(queryDetails);
       return queryDetails;
     }, (error) => {
       console.log(error);
@@ -47,27 +46,41 @@ function YouTubeService($http) {
   }
 
   const getTrailers = () => {
-    console.log(trailers);
-
     return $http({
       method: 'GET',
-      url: `https://www.googleapis.com/youtube/v3/videos?id=${trailers}&key=${key()}&part=statistics,snippet,player`,
+      url: `https://www.googleapis.com/youtube/v3/videos?id=${trailers}&key=${key()}&part=statistics,snippet`,
     }).then((response) => {
       trailerStats = response;
-      console.log(trailerStats);
-
       return response;
     }, (error) => {
       console.log(error);
     });
   }
 
+  const setClickedMovie = (id) => {
+    return $http({
+      method: 'GET',
+      url: `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${key()}&part=statistics,snippet`,
+    }).then((response) => {
+      clickedMovie = response.data.items[0];
+      return clickedMovie;
+    
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  const getClickedMovie = () => {
+    return clickedMovie;
+  }
 
 
   return {
     sendQuery,
     getTrailers,
-    getQueryDetails
+    getQueryDetails,
+    setClickedMovie,
+    getClickedMovie
   }
 }
 
