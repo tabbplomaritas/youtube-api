@@ -15,9 +15,7 @@ function YouTubeService($http) {
       url: `https://www.googleapis.com/youtube/v3/search?&q=${query}&type=video&maxResults=5&key=AIzaSyB76Pizg-mT_itkTTAJXwJTs6_tL3KTMJk&part=snippet
       `,
     }).then((response) => {
-      console.log(response);
       queryResults = response.data.items;
-      console.log(queryResults);
 
       return getQueryDetails();;
     }, (error) => {
