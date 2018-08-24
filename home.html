@@ -1,0 +1,67 @@
+<nav>
+  <!-- main nav links -->
+  <div class="nav_linkContainer">
+    <a id="trailers" ng-click="$ctrl.animateDropdown();">Movie Trailers</a>
+    <a id="search" ng-click="$ctrl.animateSearchForm();">Search</a>
+  </div>
+  <hr>
+</nav>
+
+  <!-- nav dropdown items -->
+<section class="dropdowns">
+    <!-- trailer dropdown -->
+    <!-- using wrapper div to hide the overflow on aninmated links div -->
+    <div class="dropdowns_linksWrapper">
+      <div class="dropdowns_trailerLinks shadow animated">
+        <a ng-repeat="trailer in $ctrl.trailers" id={{trailer.id}} ng-click="$ctrl.clickMovie($event, $index)">{{trailer.customTitle}}</a>
+        <i class="fas fa-times-circle trailerLinks_close" ng-click="$ctrl.slideUp();"></i>
+      </div>
+    </div>
+
+  <!--Search drop down form-->
+    <form class="animated" ng-submit="$ctrl.sendRequest($ctrl.query);">
+      <div class="searchWrapper shadow">
+        <input type="text" ng-model="$ctrl.query" placeholder="Search for a movie trailer">
+        <button class="searchButton">
+            <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </form>
+</section>  
+
+<section class="movieInfo">
+    <i class="fas fa-times-circle movieInfo_close" ng-click="$ctrl.movieInfo_fadeOut();"></i>
+  <h2>{{$ctrl.clickedMovie.snippet.title}}</h2>
+
+  <div class="movieInfo_thumbnail" ng-show="$ctrl.showThumb">
+    <img src={{$ctrl.clickedMovie.snippet.thumbnails.medium.url}}>
+    <button class="watchTrailer animated pulse infinite" ng-click="$ctrl.watchTrailer()">Watch the trailer</button>
+  </div>
+  <section class="videoPlayer">
+      <iframe ng-show="$ctrl.showPlayer" width="336" height="189" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </section>
+
+    <section class="movieInfo_details">
+      <p class="description" >{{$ctrl.clickedMovie.snippet.description | limitTo: $ctrl.limit }} ...
+      <button class="readMore" ng-click="$ctrl.readMore();"> read more</button></p>
+
+      <div class="movieInfo_stats">
+        <p>Views: <i class="fas fa-thumbs-down"></i> {{$ctrl.clickedMovie.statistics.viewCount}}</p>
+        <p>Likes: <i class="fas fa-heart"></i> {{$ctrl.clickedMovie.statistics.likeCount}} </p>
+        <p>Dislikes: <i class="fas fa-thumbs-down"></i> {{$ctrl.clickedMovie.statistics.dislikeCount}}</p>
+      </div>
+  </section>
+</section>
+
+  <section class="searchResults">
+    <div class="searchResults_thumbnail animated fadeIn shadow" ng-repeat="item in $ctrl.queryResults">
+      <p>{{item.snippet.title}}</p>
+
+      <img src="{{item.snippet.thumbnails.medium.url}}" id={{item.id}} ng-click="$ctrl.playQueryTrailer($event);">
+      <div class="movieInfo_stats">
+          <p>Views: <i class="fas fa-thumbs-down"></i> {{item.statistics.viewCount}}</p>
+          <p>Likes: <i class="fas fa-heart"></i> {{item.statistics.likeCount}} </p>
+          <p>Dislikes: <i class="fas fa-thumbs-down"></i> {{item.statistics.dislikeCount}}</p>
+        </div>
+    </div>
+  </section>

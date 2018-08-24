@@ -54,7 +54,7 @@ nav {
 .nav_linkContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 100%
 }
@@ -100,11 +100,22 @@ hr {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .dropdowns_linksWrapper {
+  display: none;
   overflow: hidden;
   height: auto;
+  position: absolute;
+  top: 0rem;
+  z-index: 2;
+}
+
+.shadow {
+  box-shadow: 0px 0px 7px 0px grey;
+  border-radius: 5px;
+  margin: .5rem;
 }
 
 .dropdowns_trailerLinks {
@@ -115,7 +126,8 @@ hr {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  animation-fill-mode: forwards;
+  /* animation-fill-mode: forwards; */
+  animation-duration: .5s;
   background-repeat: no-repeat;
   background-size: cover;
   background: #12c2e9;  /* fallback for old browsers */
@@ -138,9 +150,33 @@ hr {
 background-color:#2d3436;
 }
 
-form {
+.trailerLinks_close, .movieInfo_close {
+  color: white;
+  font-size: 3.2rem;
+  background-color: transparent;
+  text-align: center;
+  padding: .5rem 0;
+  transition: .25s all;
+  cursor: pointer;
+}
+
+.movieInfo_close {
+  color: #c471ed;
+  background-color: white;
   position: absolute;
-  top: 45%;
+  top: -2.5rem;
+  right: -1rem;
+}
+
+.trailerLinks_close:hover, .movieInfo_close:hover {
+  color: #2d3436;
+  transform: rotate(500deg);
+}
+
+form {
+  display: none;
+  animation-duration: .5s;
+  animation-fill-mode: both;
 }
 
 .searchWrapper {
@@ -177,14 +213,37 @@ input[type=text] {
 
 /* movie trailer info styles */
 .movieInfo {
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   opacity: 0;
   padding: 1rem;
+  margin: 2rem auto;
   border-radius: 5px;
   border: solid 1px #2d3436;
+  transition: .25s filter;
+  position: relative;
+  max-width: 75rem;
+}
+
+.movieInfo_thumbnail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.movieInfo_details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.blur {
+  -webkit-filter: blur(4px);
+  filter: blur(4px);
 }
 
 .movieInfo h2 {
@@ -199,12 +258,12 @@ input[type=text] {
 
 .movieInfo_stats{
   text-align: left;
-  width: 40%;
-  align-self: flex-start;
+  width: 20rem;
   background-color: #f64f59;
   padding: 1rem;
   border-radius: 5px;
   color: white;
+  letter-spacing: 1px;
 }
 
 .movieInfo p {
@@ -221,7 +280,7 @@ input[type=text] {
 .watchTrailer {
   margin: 1rem 0;
   font-family: 'Alegreya Sans', sans-serif;
-  font-size: 3.2rem;
+  font-size: 2.2rem;
   padding: 1rem;
   width: 32rem;
   text-align: center;
@@ -232,16 +291,48 @@ input[type=text] {
 }
 
 .watchTrailer:hover {
-  transform: scale(1.2);
+  background-color: #12c2e9;
 }
 
 .videoPlayer {
-  margin-top: 2rem;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/* search results */
+
+.searchResults {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.searchResults_thumbnail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  border: 2px solid grey;
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #2d3436;
+  color: white;
+  width: 35rem;
+  height: 35rem;
+  cursor: pointer;
+  transition: .25s all;
+}
+
+.searchResults_thumbnail img {
+  border: 1px solid white;
+  border-radius: 5px;
+  margin: 1rem;
+
 }
 
 /* media queries  */
@@ -250,13 +341,30 @@ input[type=text] {
     /* flex-direction: row; */
   }
 
-  nav div {
+  .nav_linkContainer {
     flex-direction: row;
   }
 
-  #menu {
-    /* display: none; */
+  .movieInfo_details {
+    flex-direction: row;
+    justify-content: space-around;
   }
+
+  .movieInfo_stats {
+    order: 1;
+    margin-right: 3rem;
+  }
+
+  .description {
+    width: 50%;
+    order: 2;
+  }
+
+  .searchResults {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
 
 }
 
