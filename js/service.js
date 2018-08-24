@@ -70,17 +70,12 @@ function YouTubeService($http) {
     });
   }
 
-  const getClickedMovie = () => {
-    return clickedMovie;
-  }
-
 
   return {
     sendQuery,
     getTrailers,
     getQueryDetails,
-    setClickedMovie,
-    getClickedMovie
+    setClickedMovie
   }
 }
 
