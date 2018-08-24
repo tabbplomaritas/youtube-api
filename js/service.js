@@ -64,7 +64,7 @@ function YouTubeService($http) {
     }).then((response) => {
       clickedMovie = response.data.items[0];
       return clickedMovie;
-    
+
     }, (error) => {
       console.log(error);
     });

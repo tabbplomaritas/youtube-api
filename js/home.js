@@ -2,7 +2,7 @@
 
 const home = {
   template: `
-  <nav class="flex-col-center">
+  <nav>
       <a id="trailers" ng-click="$ctrl.animateDropdown();">Movie Trailers</a>
       <a id="search" ng-click="$ctrl.animateSearchForm();">Search</a>
   </nav>
