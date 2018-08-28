@@ -140,6 +140,8 @@ hr {
   background-color:#2d3436;
 }
 
+
+  /* review and consolidate close button stlyes */
 .trailerLinks_close, .movieInfo_close, {
   color: white;
   font-size: 3.2rem;
@@ -163,25 +165,6 @@ hr {
   transform: rotate(500deg);
 }
 
-.searchResults_close {
-  font-size: 1.3rem;
-  color: #2d3436;
-  background-color: white;
-  position: absolute;
-  top: 0rem;
-  right: 1rem;
-  cursor: pointer;
-  transition: .25s all;
-}
-
-.searchResults_close p {
-  font-family: 'Montserrat', sans-serif;
-  display: inline;
-}
-
-.searchResults_close:hover {
-  color: #c471ed;
-}
 
 form {
   display: none;
@@ -320,7 +303,23 @@ iframe {
 }
 
 .searchResults_close {
+  font-size: 1.3rem;
+  color: #2d3436;
+  background-color: white;
+  position: absolute;
+  top: 0rem;
+  right: 1rem;
+  cursor: pointer;
+  transition: .25s all;
+}
 
+.searchResults_close p {
+  font-family: 'Montserrat', sans-serif;
+  display: inline;
+}
+
+.searchResults_close:hover {
+  color: #c471ed;
 }
 
 .searchResults_thumbnail {
