@@ -140,7 +140,7 @@ hr {
   background-color:#2d3436;
 }
 
-.trailerLinks_close, .movieInfo_close {
+.trailerLinks_close, .movieInfo_close, {
   color: white;
   font-size: 3.2rem;
   background-color: transparent;
@@ -158,9 +158,29 @@ hr {
   right: -1rem;
 }
 
-.trailerLinks_close:hover, .movieInfo_close:hover {
+.trailerLinks_close:hover, .movieInfo_close:hover{
   color: #2d3436;
   transform: rotate(500deg);
+}
+
+.searchResults_close {
+  font-size: 1.3rem;
+  color: #2d3436;
+  background-color: white;
+  position: absolute;
+  top: 0rem;
+  right: 1rem;
+  cursor: pointer;
+  transition: .25s all;
+}
+
+.searchResults_close p {
+  font-family: 'Montserrat', sans-serif;
+  display: inline;
+}
+
+.searchResults_close:hover {
+  color: #c471ed;
 }
 
 form {
@@ -291,10 +311,16 @@ iframe {
 /* search results */
 
 .searchResults {
-  display: flex;
+  display: none;
+  padding-top: 1rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.searchResults_close {
+
 }
 
 .searchResults_thumbnail {

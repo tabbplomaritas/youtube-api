@@ -22,7 +22,7 @@ const home = {
     <!--Search drop down form-->
       <form class="animated" ng-submit="$ctrl.sendRequest($ctrl.query);">
         <div class="searchWrapper shadow">
-          <input type="text" ng-model="$ctrl.query" placeholder="Search for a movie trailer" autofocus >
+          <input type="text" ng-model="$ctrl.query" placeholder="Search for videos on YouTube" autofocus >
           <button class="searchButton">
               <i class="fas fa-search"></i>
           </button>
@@ -59,6 +59,7 @@ const home = {
 <!-- search results list -->
 
   <section class="searchResults">
+    <i class="fas fa-times-circle searchResults_close" ng-click="$ctrl.clearSearchResults();"><p> Clear Search Results</p></i>
     <div class="searchResults_thumbnail animated fadeIn shadow" ng-repeat="item in $ctrl.queryResults">
       <p>{{item.snippet.title}}</p>
 
@@ -179,7 +180,7 @@ const home = {
     vm.setClickedMovie = ($event) => {
       //slide the trailerLinks menu up
       vm.slideUp();
-
+      vm.clearSearchResults();
       //set the clickedMovie data
       YouTubeService.setClickedMovie($event.target.id).then((response) => {
         vm.clickedMovie = response;
@@ -243,10 +244,23 @@ const home = {
 
       //send api call for user input search term then set response to variable.
       YouTubeService.sendQuery(query).then((response) => {
+        angular.element(searchResults).css("display", "flex");
         vm.queryResults = response;
         //reset search input
         vm.query = "";
       });
+    }
+
+    vm.clearSearchResults = () => {
+      angular.element(searchResults).addClass("animated fadeOut");
+      $timeout(function() {
+        vm.queryResults = "";
+        angular.element(searchResults).removeClass("animated fadeOut");
+        angular.element(searchResults).css("display", "none");
+      }, 1000)
+
+
+
     }
   }]
 };
